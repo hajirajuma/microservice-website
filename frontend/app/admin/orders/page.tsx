@@ -7,7 +7,7 @@ export default function OrdersPage() {
 
   const fetchOrders = async () => {
     const response = await fetch(
-      `${process.env.API_URL}/orders`,
+      `${process.env.NEXT_PUBLIC_API_URL}/orders`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -36,7 +36,7 @@ export default function OrdersPage() {
     status: string
   ) => {
     await fetch(
-      `${process.env.API_URL}/orders/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/orders/${id}`,
       {
         method: 'PATCH',
         headers: {
@@ -57,7 +57,7 @@ export default function OrdersPage() {
 
   const deleteOrder = async (id: number) => {
     await fetch(
-      `${process.env.API_URL}/orders/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/orders/${id}`,
       {
         method: 'DELETE',
         headers: {

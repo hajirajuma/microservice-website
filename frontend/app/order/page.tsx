@@ -45,7 +45,7 @@ export default function OrderPage() {
   const handlePlaceOrder = async () => {
     setPlacing(true);
     await fetch(
-  `${process.env.API_URL}/orders`,
+  `${process.env.NEXT_PUBLIC_API_URL}/orders`,
   {
     method: 'POST',
 

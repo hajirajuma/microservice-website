@@ -6,7 +6,7 @@ import axios from 'axios';
 export class GatewayController {
     @Get('auth/verify')
     async verify(@Headers('Authorization') token: string) {
-        const response = await axios.get('http://localhost:3001/auth/verify', {
+        const response = await axios.get(`${process.env.AUTH_API_URL}/auth/verify`, {
             headers: { Authorization: token },
         });
         return response.data;
@@ -14,14 +14,14 @@ export class GatewayController {
     @Get('products')
     async getProducts() {
         const response = await axios.get(
-            'http://localhost:3002/products',
+            `${process.env.PRO_API_URL}/products`,
         );
         return response.data;
     }
         @Get('products/:id')
     async getProduct(@Param('id') id: number) {
         const response = await axios.get(
-            `http://localhost:3002/products/${id}`,
+            `${process.env.PRO_API_URL}products/${id}`,
         );
         return response.data;
     }
@@ -29,14 +29,14 @@ export class GatewayController {
         @Get('admin/summary')
         async getAdminSummary() {
             // products
-            const productsResp = await axios.get('http://localhost:3002/products');
+            const productsResp = await axios.get(`${process.env.PRO_API_URL}/products`);
             const productsCount = Array.isArray(productsResp.data) ? productsResp.data.length : 0;
 
             // customers (attempt, fall back to 0)
                 let customersCount = 0;
                 try {
                     // auth-service exposes customers at /auth/customers
-                    const usersResp = await axios.get('http://localhost:3001/auth/customers');
+                    const usersResp = await axios.get(`${process.env.AUTH_API_URL}/auth/customers`);
                     customersCount = Array.isArray(usersResp.data) ? usersResp.data.length : 0;
                 } catch (e) {
                     customersCount = 0;
@@ -47,7 +47,7 @@ export class GatewayController {
             let totalRevenue = 0;
             try {
                 // call order-service directly (it runs on 3004)
-                const ordersResp = await axios.get('http://localhost:3004/orders');
+                const ordersResp = await axios.get(`${process.env.ORDER_API_URL}/orders`);
                 if (Array.isArray(ordersResp.data)) {
                     ordersCount = ordersResp.data.length;
                     totalRevenue = ordersResp.data.reduce((sum: number, o: any) => sum + (o.totalAmount || o.total || 0), 0);
@@ -67,7 +67,7 @@ export class GatewayController {
     @Post('register')
     async register(@Body() body: any) {
         const response = await axios.post(
-            'http://localhost:3001/auth/register',
+            `${process.env.AUTH_API_URL}/auth/register`,
             body,
         );
         return response.data;
@@ -75,13 +75,13 @@ export class GatewayController {
 
     @Get('customers')
     async getCustomers() {
-        const response = await axios.get('http://localhost:3001/auth/customers');
+        const response = await axios.get(`${process.env.AUTH_API_URL}/auth/customers`);
         return response.data;
     }
     @Post('login')
     async login(@Body() body: any) {
         const response = await axios.post(
-            'http://localhost:3001/auth/login',
+            `${process.env.AUTH_API_URL}/auth/login`,
             body,
         );
         return response.data;
@@ -96,7 +96,7 @@ export class GatewayController {
             );
         }
         const response = await axios.post(
-            'http://localhost:3002/products',
+            `${process.env.PRO_API_URL}/products`,
             body,
         );
         return response.data;
@@ -107,7 +107,7 @@ async createOrder(
   @Body() body: any,
 ) {
   const response = await axios.post(
-    'http://localhost:3004/orders',
+    `${process.env.ORDER_API_URL}/orders`,
     body,
   );
 
@@ -117,7 +117,7 @@ async createOrder(
 @Get('orders')
 async getOrders() {
   const response = await axios.get(
-    'http://localhost:3004/orders',
+    `${process.env.ORDER_API_URL}/orders`,
   );
 
   return response.data;
@@ -132,7 +132,7 @@ async getOrders() {
             );
         }
         return axios.patch(
-            `http://localhost:3002/products/${id}`,
+            `${process.env.PRO_API_URL}/products/${id}`,
             body,
         );
     }
@@ -146,14 +146,14 @@ async getOrders() {
             );
         }
         return axios.delete(
-            `http://localhost:3002/products/${id}`
+            `${process.env.PRO_API_URL}/products/${id}`
         );
     }
 
     private async verifyToken(token: string): Promise<any> {
         try {
             const response = await axios.get(
-                'http://localhost:3001/auth/verify',
+                `${process.env.AUTH_API_URL}/auth/verify`,
                 {
                     headers: {
                         Authorization: token,

@@ -29,7 +29,7 @@ export default function RegisterPage() {
     setError('');
     setLoading(true);
     try {
-      const response = await fetch(`${process.env.API_URL}/register`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),

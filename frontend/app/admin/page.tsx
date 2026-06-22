@@ -20,7 +20,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchSummary = async () => {
       try {
-        const resp = await fetch(`${process.env.API_URL}/admin/summary`);
+        const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/summary`);
         const data = await resp.json();
         setSummary({
           productsCount: data.productsCount ?? 0,

@@ -102,7 +102,7 @@ export default function ProductsPage() {
           router.push('/login');
           return;
         }
-        const response = await fetch(`${process.env.API_URL}/products`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.status === 401) {

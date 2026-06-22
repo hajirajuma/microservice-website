@@ -9,10 +9,10 @@ export default function CustomersPage() {
   const fetchData = async () => {
     try {
       const [customersResp, ordersResp] = await Promise.all([
-        fetch(`${process.env.API_URL}/customers`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/customers`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         }),
-        fetch(`${process.env.API_URL}/orders`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         }),
       ]);

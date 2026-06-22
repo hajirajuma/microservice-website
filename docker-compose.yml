@@ -13,24 +13,45 @@ services:
   auth-service:
     build: ./auth-service
     ports:
-      - "3001:3001"
+      - "AUTH_PORT:AUTH_PORT"
+    environment:
+      AUTH_PORT: ${AUTH_PORT}
+      AUTH_DATABASE_URL: ${AUTH_DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
     depends_on:
       - postgres
 
   product-service:
     build: ./product-service
     ports:
-      - "3002:3002"
+      - "PRO_PORT:PRO_PORT"
+    environment:
+      PRO_PORT: ${PRO_PORT}
+      PRODUCT_DATABASE_URL: ${PRODUCT_DATABASE_URL}
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY}
+      SUPABASE_BUCKET: ${SUPABASE_BUCKET}
 
   order-service:
     build: ./order-service
     ports:
-      - "3004:3004"
+      - "ORDER_PORT:ORDER_PORT"
+    environment:
+      ORDER_PORT: ${ORDER_PORT}
+      ORDER_DATABASE_URL: ${ORDER_DATABASE_URL}
 
   api-gateway:
     build: ./api-gateway
     ports:
-      - "3003:3003"
+      - "API_PORT:API_PORT"
+    environment:
+      API_PORT: ${API_PORT}
+      AUTH_API_URL: ${AUTH_API_URL}
+      PRO_API_URL: ${ PRO_API_URL}
+      ORDER_API_URL: ${ORDER_API_URL}
+      FRO_API_URL: ${FRO_API_URL}
     depends_on:
       - auth-service
       - product-service
@@ -39,6 +60,9 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "3000:3000"
+      - "FRO_PORT:FRO_PORT"
+    environment:
+      FRO_PORT: ${FRO_PORT}
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
     depends_on:
       - api-gateway
