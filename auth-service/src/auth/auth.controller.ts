@@ -2,11 +2,15 @@ import { Controller, Post, Body, UseGuards, Get, Request } from '@nestjs/common'
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { PrismaService } from 'src/prisma.service';
 
 @Controller('auth')
 export class AuthController {
-  prisma: any;
-  constructor(private readonly authService: AuthService) {}
+  
+  constructor(
+    private readonly authService: AuthService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   @Get('verify')
   @UseGuards(JwtAuthGuard)
