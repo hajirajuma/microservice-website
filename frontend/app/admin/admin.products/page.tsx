@@ -75,7 +75,7 @@ export default function ProductsPage() {
   const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${process.env.API_URL}/products`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`);
       const data = await res.json();
       setProducts(data);
     } catch {
@@ -97,7 +97,7 @@ export default function ProductsPage() {
   const confirmDelete = async () => {
     if (!deleteTarget) return;
     try {
-      const res = await fetch(`${process.env.API_URL}/products/${deleteTarget.id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${deleteTarget.id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
@@ -123,7 +123,7 @@ export default function ProductsPage() {
     if (!products.length) return;
     setPublishing(true);
     try {
-      await fetch(`${process.env.API_URL}/products/publish-all`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/publish-all`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
