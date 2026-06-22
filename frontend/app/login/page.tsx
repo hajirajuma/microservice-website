@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 export default function LoginPage() {
 
   console.log("URL: ", process.env.NEXT_PUBLIC_API_URL)
+  console.log("PORT: ", process.env.PORT)
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
