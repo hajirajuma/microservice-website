@@ -8,7 +8,7 @@ COPY package*.json ./
 
 RUN npm install
 
-RUN echo "NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL"
+RUN printenv | grep NEXT_PUBLIC
 
 
 COPY . .
